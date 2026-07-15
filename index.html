@@ -12,6 +12,15 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+.loader{position:fixed;inset:0;z-index:999;background:#04060b;display:grid;place-items:center;transition:opacity .5s ease}
+.loader span{font-size:clamp(1.4rem,4vw,2.6rem);font-weight:700;letter-spacing:.55em;text-transform:uppercase;
+  color:#2a3648;animation:lightup 1s ease forwards}
+@keyframes lightup{
+  0%{color:#1b2432;text-shadow:none}
+  60%{color:#8fd6ff;text-shadow:0 0 30px rgba(46,168,255,.8)}
+  100%{color:#fff;text-shadow:0 0 46px rgba(46,168,255,1)}
+}
+.loader.off{opacity:0;pointer-events:none}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 img{max-width:100%}
@@ -186,13 +195,15 @@ footer b{color:var(--text);letter-spacing:.25em}
 </head>
 <body>
 
+<div class="loader" id="loader"><span>V A L O R A</span></div>
+
 <nav>
   <a class="brand" href="#home">
     <img class="logoimg" src="VALORA%20LOGO.png" alt="VALORA">
   </a>
   <div class="links" id="links">
     <a href="#home">Home</a>
-    <a href="#quemsomos">A Valora</a>
+    <a href="avalora.html">A Valora</a>
     <a href="#servicos">Serviços</a>
     <a href="#portfolio">Portfólio</a>
     <a href="#contato">Contato</a>
@@ -414,6 +425,10 @@ footer b{color:var(--text);letter-spacing:.25em}
 <footer><b>VALORA</b> · Tecnologia &amp; Sistemas · valorasistemas@gmail.com</footer>
 
 <script>
+/* ---- Loader de entrada ---- */
+setTimeout(()=>{document.getElementById('loader').classList.add('off')},1150);
+setTimeout(()=>{document.getElementById('loader').remove()},1750);
+
 /* ---- Hero: slides rotativos ---- */
 const slides=[...document.querySelectorAll('.slide')];
 const dotsBox=document.getElementById('dots');

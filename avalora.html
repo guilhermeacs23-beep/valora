@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Valora — Tecnologia &amp; Sistemas</title>
+<style>
+:root{
+  --bg:#05080f; --panel:#0b1220; --accent:#2ea8ff; --accent2:#8fd6ff;
+  --text:#f2f6fb; --muted:#9db0c9; --line:rgba(143,214,255,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* Loader — transição de página */
+.loader{position:fixed;inset:0;z-index:999;background:#04060b;display:grid;place-items:center;
+  transition:opacity .5s ease}
+.loader span{font-size:clamp(1.4rem,4vw,2.6rem);font-weight:700;letter-spacing:.55em;text-transform:uppercase;
+  color:#2a3648;animation:lightup 1s ease forwards}
+@keyframes lightup{
+  0%{color:#1b2432;text-shadow:none}
+  60%{color:#8fd6ff;text-shadow:0 0 30px rgba(46,168,255,.8)}
+  100%{color:#fff;text-shadow:0 0 46px rgba(46,168,255,1)}
+}
+.loader.off{opacity:0;pointer-events:none}
+
+/* Nav pílula */
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1180px,calc(100% - 24px));
+  z-index:100;background:rgba(6,10,18,.72);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:18px;
+  display:flex;align-items:center;justify-content:space-between;padding:14px 26px}
+nav .brand img{height:52px;margin:-11px 0;display:block;filter:drop-shadow(0 0 10px rgba(46,168,255,.45))}
+nav .links{display:flex;gap:4px;align-items:center}
+nav .links a{font-size:.78rem;letter-spacing:.14em;font-weight:600;text-transform:uppercase;
+  padding:8px 14px;border-radius:99px;color:var(--muted);transition:.2s}
+nav .links a:hover,nav .links a.on{color:var(--text);background:rgba(46,168,255,.1)}
+nav .cta-mini{font-size:.75rem;letter-spacing:.1em;font-weight:700;text-transform:uppercase;
+  padding:9px 18px;border-radius:99px;background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;transition:.2s}
+nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
+.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+@media(max-width:900px){
+  nav .links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;
+    background:rgba(6,10,18,.96);border:1px solid var(--line);border-radius:16px;
+    flex-direction:column;padding:14px;gap:2px}
+  nav .links.open{display:flex}
+  nav .links a{width:100%;text-align:center;padding:12px}
+  .menu-btn{display:block}
+}
+
+/* Quem nós somos */
+.who{padding:170px 0 90px}
+.who .cols{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:center}
+.who video{width:100%;border-radius:20px;background:#0b1220;
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 60%,transparent 100%);
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 60%,transparent 100%)}
+.kick{color:var(--accent);font-size:.85rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.who h1{font-size:clamp(1.9rem,4.2vw,2.8rem);font-weight:800;margin:12px 0 22px;line-height:1.2}
+.who p{color:#c4d2e4;margin-bottom:16px}
+@media(max-width:880px){.who .cols{grid-template-columns:1fr;gap:34px}}
+
+/* Palavras gigantes rolando */
+.ghost{overflow:hidden;white-space:nowrap;padding:30px 0 60px}
+.ghost div{display:inline-block;animation:slide 26s linear infinite;
+  font-size:clamp(4rem,12vw,9rem);font-weight:800;text-transform:uppercase}
+.ghost b{color:transparent;-webkit-text-stroke:1.5px rgba(143,214,255,.35);margin-right:60px}
+.ghost i{font-style:normal;color:#fff;margin-right:60px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* FAQ */
+.faq{padding:80px 0 100px;background:#e9eaec;color:#10151d}
+.faq .cols{display:grid;grid-template-columns:1fr 1.15fr;gap:60px;align-items:start}
+.faq video{width:100%;border-radius:20px;mix-blend-mode:multiply}
+.faq h2{font-size:clamp(1.9rem,4.2vw,2.9rem);font-weight:800;line-height:1.25;margin-bottom:34px}
+.faq h2 b{color:var(--accent)}
+.q{border-bottom:1.5px solid #c9d2dd}
+.q button{width:100%;background:none;border:none;cursor:pointer;text-align:left;
+  font-size:1.15rem;font-weight:600;color:#10151d;padding:20px 40px 20px 0;position:relative;font-family:inherit}
+.q button::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  font-size:1.6rem;color:var(--accent);transition:.3s}
+.q.open button::after{content:"—";font-size:1.1rem}
+.q .a{max-height:0;overflow:hidden;transition:max-height .4s ease;color:#3d4a5c;font-size:.98rem}
+.q.open .a{max-height:300px;padding-bottom:20px}
+@media(max-width:880px){.faq .cols{grid-template-columns:1fr;gap:34px}}
+
+/* Orçamento */
+.orc{padding:110px 0;position:relative;overflow:hidden}
+.orc::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:72px 72px}
+.orc .cols{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;position:relative;align-items:center}
+.orc h2{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;line-height:1.1}
+.orc h2 span{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.65)}
+.orc hr{border:none;border-top:1px solid rgba(255,255,255,.25);margin:34px 0}
+.orc .mini{color:var(--muted);max-width:480px}
+.btn-round{display:inline-flex;align-items:center;gap:12px;margin-top:30px;
+  padding:10px 12px 10px 26px;border-radius:99px;background:#fff;color:#0a0f18;font-weight:700;transition:.25s}
+.btn-round em{font-style:normal;width:44px;height:44px;border-radius:50%;background:#0a0f18;color:#fff;
+  display:grid;place-items:center;font-size:1.1rem;transition:.25s}
+.btn-round:hover{box-shadow:0 0 34px rgba(46,168,255,.5)}
+.btn-round:hover em{background:var(--accent)}
+.ola h3{font-size:1.4rem;font-weight:800;margin-bottom:18px}
+.ola a{display:flex;align-items:center;gap:10px;color:#cfe0f2;padding:8px 0;transition:.2s}
+.ola a:hover{color:var(--accent2)}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:28px 0;text-align:center;color:var(--muted);font-size:.85rem}
+footer b{color:var(--text);letter-spacing:.25em}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:880px){.orc .cols{grid-template-columns:1fr;gap:40px}}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><span>A&nbsp;&nbsp;V A L O R A</span></div>
+
+<nav>
+  <a class="brand" href="index.html"><img src="VALORA%20LOGO.png" alt="VALORA"></a>
+  <div class="links" id="links">
+    <a href="index.html">Home</a>
+    <a href="avalora.html" class="on">A Valora</a>
+    <a href="index.html#servicos">Serviços</a>
+    <a href="index.html#portfolio">Portfólio</a>
+    <a href="index.html#contato">Contato</a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a class="cta-mini" href="https://wa.me/5541999286812" target="_blank">Orçamento</a>
+    <button class="menu-btn" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- Quem nós somos -->
+<section class="who">
+  <div class="wrap cols">
+    <video class="reveal" autoplay muted loop playsinline onerror="this.remove()">
+      <source src="fa%C3%A7a_dessa_imagem_um_video_ani.mp4" type="video/mp4">
+    </video>
+    <div class="reveal">
+      <span class="kick">Quem nós somos?</span>
+      <h1>Somos uma empresa de tecnologia com sede em Curitiba - PR.</h1>
+      <p>A Valora nasceu para transformar operações com tecnologia. Somos especialistas em sistemas de gestão para nichos específicos, desenvolvimento web, aplicativos, automação de rotinas e inteligência de dados.</p>
+      <p>Ao longo da nossa trajetória, nos dedicamos a substituir planilhas e processos manuais por soluções auditáveis, integradas e acessíveis de qualquer lugar. Nosso compromisso com a inovação nos permite entregar tecnologia de ponta com implantação rápida e suporte próximo — do pequeno empreendedor à empresa que precisa de BI e integração entre setores.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Palavras gigantes -->
+<div class="ghost">
+  <div>
+    <b>Valora</b><i>Missão</i><b>Tecnologia</b><i>Inovação</i><b>Valora</b><i>Missão</i><b>Tecnologia</b><i>Inovação</i>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="wrap cols">
+    <video class="reveal" autoplay muted loop playsinline onerror="this.remove()">
+      <source src="fa%C3%A7a_dessa_imagem_um_video_ani.mp4" type="video/mp4">
+    </video>
+    <div class="reveal">
+      <h2>Tem <b>+</b> tecnologia, <b>+</b> automação, <b>+</b> dados e muito <b>+</b> resultado.</h2>
+      <div class="q open">
+        <button>Qual é a missão da Valora?</button>
+        <div class="a">Levar tecnologia de ponta para negócios de todos os tamanhos: substituir processos manuais por sistemas inteligentes que dão controle, clareza e tempo de volta para o empreendedor cuidar do que importa.</div>
+      </div>
+      <div class="q">
+        <button>Como abordamos os projetos dos nossos clientes?</button>
+        <div class="a">Começamos com um diagnóstico da operação para entender onde a tecnologia gera mais retorno. Depois, proposta com escopo claro, desenvolvimento com entregas rápidas e acompanhamento, e por fim implantação com treinamento da equipe e suporte contínuo.</div>
+      </div>
+      <div class="q">
+        <button>Qual é a nossa visão para o futuro?</button>
+        <div class="a">Ser referência em soluções de gestão e automação com IA para nichos específicos, com produtos cada vez mais inteligentes — sistemas que não apenas registram dados, mas trabalham ativamente pelo crescimento dos nossos clientes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Orçamento -->
+<section class="orc" id="contato">
+  <div class="wrap cols">
+    <div class="reveal">
+      <h2>Peça seu <span>Orçamento</span></h2>
+      <hr>
+      <p class="mini">Conte o que você precisa e receba uma proposta sob medida — sem compromisso.</p>
+      <a class="btn-round" href="https://wa.me/5541999286812" target="_blank">Entre em contato <em>→</em></a>
+    </div>
+    <div class="ola reveal">
+      <h3>Diga Olá 👋</h3>
+      <a href="mailto:valorasistemas@gmail.com">✉️ valorasistemas@gmail.com</a>
+      <a href="https://wa.me/5541999286812" target="_blank">💬 +55 41 9 9928-6812</a>
+    </div>
+  </div>
+</section>
+
+<footer><b>VALORA</b> · Tecnologia &amp; Sistemas · valorasistemas@gmail.com</footer>
+
+<script>
+/* Loader some após iluminar */
+setTimeout(()=>{document.getElementById('loader').classList.add('off')},1150);
+setTimeout(()=>{document.getElementById('loader').remove()},1750);
+
+/* FAQ accordion */
+document.querySelectorAll('.q button').forEach(b=>b.addEventListener('click',()=>{
+  const q=b.parentElement,was=q.classList.contains('open');
+  document.querySelectorAll('.q').forEach(x=>x.classList.remove('open'));
+  if(!was)q.classList.add('open');
+}));
+
+/* Reveal ao rolar */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('#links a').forEach(a=>a.onclick=()=>document.getElementById('links').classList.remove('open'));
+</script>
+</body>
+</html>
