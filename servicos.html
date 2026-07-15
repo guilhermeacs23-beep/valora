@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serviços — Valora</title>
+<style>
+:root{
+  --bg:#05080f; --accent:#2ea8ff; --accent2:#8fd6ff;
+  --text:#f2f6fb; --muted:#9db0c9; --line:rgba(143,214,255,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+.loader{position:fixed;inset:0;z-index:999;background:#04060b;display:grid;place-items:center;transition:opacity .5s ease}
+.loader span{font-size:clamp(1.2rem,3.6vw,2.4rem);font-weight:700;letter-spacing:.55em;text-transform:uppercase;
+  color:#2a3648;animation:lightup 1s ease forwards}
+@keyframes lightup{
+  0%{color:#1b2432;text-shadow:none}
+  60%{color:#8fd6ff;text-shadow:0 0 30px rgba(46,168,255,.8)}
+  100%{color:#fff;text-shadow:0 0 46px rgba(46,168,255,1)}
+}
+.loader.off{opacity:0;pointer-events:none}
+
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1180px,calc(100% - 24px));
+  z-index:100;background:rgba(6,10,18,.72);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:18px;
+  display:flex;align-items:center;justify-content:space-between;padding:14px 26px}
+nav .brand img{height:52px;margin:-11px 0;display:block;filter:drop-shadow(0 0 10px rgba(46,168,255,.45))}
+nav .links{display:flex;gap:4px;align-items:center}
+nav .links a{font-size:.78rem;letter-spacing:.14em;font-weight:600;text-transform:uppercase;
+  padding:8px 14px;border-radius:99px;color:var(--muted);transition:.2s}
+nav .links a:hover,nav .links a.on{color:var(--text);background:rgba(46,168,255,.1)}
+nav .cta-mini{font-size:.75rem;letter-spacing:.1em;font-weight:700;text-transform:uppercase;
+  padding:9px 18px;border-radius:99px;background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;transition:.2s}
+nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
+.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+@media(max-width:900px){
+  nav .links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;
+    background:rgba(6,10,18,.96);border:1px solid var(--line);border-radius:16px;
+    flex-direction:column;padding:14px;gap:2px}
+  nav .links.open{display:flex}
+  nav .links a{width:100%;text-align:center;padding:12px}
+  .menu-btn{display:block}
+}
+
+/* Hero split */
+.split{display:grid;grid-template-columns:1fr 1.2fr;min-height:92svh}
+.split .left{background:#070b12;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.split .left video{width:100%;height:100%;object-fit:cover;opacity:.92}
+.split .right{background:#eef0f3;color:#10151d;display:flex;align-items:center;padding:120px 6% 60px}
+.kick{color:#5b6b80;font-size:.85rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+.split h1{font-size:clamp(2.2rem,4.8vw,3.6rem);font-weight:800;line-height:1.15;margin:16px 0 30px}
+.split h1 i{font-style:normal;color:var(--accent)}
+.explore{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;font-size:.9rem;color:#10151d;border-bottom:2.5px solid #10151d;padding-bottom:4px;transition:.2s}
+.explore:hover{color:var(--accent);border-color:var(--accent)}
+.ghostword{position:absolute;bottom:-10px;right:0;font-size:clamp(3rem,9vw,7rem);font-weight:800;
+  color:transparent;-webkit-text-stroke:1.5px rgba(16,21,29,.15);white-space:nowrap;pointer-events:none}
+@media(max-width:880px){.split{grid-template-columns:1fr}.split .left{min-height:44svh}}
+
+/* Serviços em destaque */
+.feat{background:#07090d;padding:100px 0}
+.feat .cols{display:grid;grid-template-columns:1fr 1.3fr;gap:70px;align-items:start}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;
+  border:1.5px solid var(--accent2);color:var(--accent2);font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent2)}
+.feat h2{font-size:clamp(1.9rem,4.2vw,2.9rem);font-weight:800;line-height:1.2;margin-top:20px}
+.feat h2 i{font-style:normal;color:var(--accent)}
+.feat .sub{color:var(--muted);margin-top:18px;max-width:420px}
+.rows .row{display:grid;grid-template-columns:60px 200px 1fr;gap:22px;align-items:center;
+  padding:26px 0;border-bottom:1px solid #1c2430;transition:.25s}
+.rows .row:hover{padding-left:10px;border-color:var(--accent)}
+.rows .ic{font-size:1.9rem}
+.rows h3{font-size:1.15rem;font-weight:700}
+.rows p{color:#b6c4d6;font-size:.93rem}
+@media(max-width:880px){
+  .feat .cols{grid-template-columns:1fr;gap:40px}
+  .rows .row{grid-template-columns:48px 1fr;grid-template-rows:auto auto}
+  .rows p{grid-column:2}
+}
+
+/* Cards claros com prints */
+.showcase{background:#e9eaec;color:#10151d;padding:100px 0}
+.showcase .duo{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.card{background:#f6f7f9;border-radius:18px;overflow:hidden;position:relative;padding:30px;transition:.3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 46px rgba(16,21,29,.16)}
+.card .tag{display:inline-block;background:#10151d;color:#fff;font-size:.78rem;font-weight:700;
+  padding:6px 16px;border-radius:99px;margin-bottom:20px;font-family:Consolas,monospace}
+.card img{width:100%;border-radius:10px;box-shadow:0 14px 34px rgba(16,21,29,.18)}
+.card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+.card .foot b{font-size:1.25rem;font-weight:800}
+.card .foot span{color:#5b6b80;font-size:.85rem}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:26px}
+@media(max-width:880px){.showcase .duo,.trio{grid-template-columns:1fr}}
+
+/* Tecnologias */
+.tech{background:#07090d;padding:100px 0}
+.tech h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;margin-top:20px}
+.tech h2 i{font-style:normal;color:var(--accent)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;margin-top:44px}
+.t{background:#0d1117;border:1px solid #1c2430;border-radius:16px;padding:26px 14px;text-align:center;transition:.25s}
+.t:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 0 22px rgba(46,168,255,.25)}
+.t .ic{font-size:2rem;display:block;margin-bottom:10px}
+.t span{font-size:.88rem;color:#c4d2e4;font-weight:600}
+
+/* CTA */
+.cta{padding:100px 0;text-align:center}
+.cta h2{font-size:clamp(2rem,5vw,3.2rem);font-weight:800}
+.cta h2 span{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.65)}
+.cta a{display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:15px 34px;border-radius:99px;
+  background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;font-weight:700;transition:.25s}
+.cta a:hover{box-shadow:0 0 34px rgba(46,168,255,.6);transform:translateY(-2px)}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:28px 0;text-align:center;color:var(--muted);font-size:.85rem}
+footer b{color:var(--text);letter-spacing:.25em}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><span>S E R V I Ç O S</span></div>
+
+<nav>
+  <a class="brand" href="index.html"><img src="VALORA%20LOGO.png" alt="VALORA"></a>
+  <div class="links" id="links">
+    <a href="index.html">Home</a>
+    <a href="avalora.html">A Valora</a>
+    <a href="servicos.html" class="on">Serviços</a>
+    <a href="portfolio.html">Portfólio</a>
+    <a href="index.html#contato">Contato</a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a class="cta-mini" href="https://wa.me/5541999286812" target="_blank">Orçamento</a>
+    <button class="menu-btn" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- Hero split -->
+<section class="split">
+  <div class="left">
+    <video autoplay muted loop playsinline onerror="this.remove()">
+      <source src="https://lpljcfvhwwpgqeyincub.supabase.co/storage/v1/object/public/backgrounds/valora-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="right" style="position:relative;overflow:hidden">
+    <div>
+      <span class="kick">Soluções Digitais</span>
+      <h1>Conectamos seu negócio ao mundo digital<i>.</i></h1>
+      <a class="explore" href="#destaque">Explore ↓</a>
+    </div>
+    <span class="ghostword">Estratégia</span>
+  </div>
+</section>
+
+<!-- Serviços em destaque -->
+<section class="feat" id="destaque">
+  <div class="wrap cols">
+    <div class="reveal">
+      <span class="chip">Serviços em destaque</span>
+      <h2>Transforme sua operação em uma máquina digital<i>.</i></h2>
+      <p class="sub">Da gestão do dia a dia à inteligência de dados: tudo integrado, auditável e acessível de qualquer lugar.</p>
+    </div>
+    <div class="rows reveal">
+      <div class="row"><span class="ic">🗂️</span><h3>Sistemas de Gestão</h3><p>Sistemas completos para estética automotiva, studios de beleza, lojas de roupas e consignação.</p></div>
+      <div class="row"><span class="ic">🌐</span><h3>Web &amp; E-commerce</h3><p>Sites, landing pages de alta conversão e loja virtual com Pix e cartão.</p></div>
+      <div class="row"><span class="ic">📱</span><h3>Aplicativos</h3><p>Apps Android/PWA sob medida e localização de entregas em tempo real.</p></div>
+      <div class="row"><span class="ic">💼</span><h3>CRM &amp; Vendas</h3><p>Funil de vendas, gestão de leads, chatbots e WhatsApp automático 24h.</p></div>
+      <div class="row"><span class="ic">🧠</span><h3>Dados &amp; IA</h3><p>Dashboards Power BI, bases de dados estruturadas e agentes de IA.</p></div>
+      <div class="row"><span class="ic">🤖</span><h3>Automação</h3><p>Robôs de rotinas online e integração de pagamentos com baixa automática.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Cards com prints -->
+<section class="showcase">
+  <div class="wrap">
+    <div class="duo">
+      <div class="card reveal">
+        <span class="tag">gestão_</span>
+        <img src="Estetica%20automotiva.png" alt="">
+        <div class="foot"><b>Desenvolvemos seu Sistema →</b><span>Gestão completa.</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag">dados_</span>
+        <img src="Power%20Bi%20-%20financeiro.png" alt="">
+        <div class="foot"><b>Dados &amp; BI →</b><span>Power BI.</span></div>
+      </div>
+    </div>
+    <div class="trio">
+      <div class="card reveal">
+        <span class="tag">web_</span>
+        <img src="Site%20-%20empresarial.png" alt="">
+        <div class="foot"><b>Sites →</b><span>Web.</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag">vendas_</span>
+        <img src="CRM%20funil%20de%20vendas.png" alt="">
+        <div class="foot"><b>CRM →</b><span>Funil de vendas.</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag">automação_</span>
+        <img src="ROBOS%20-%20Automa%C3%A7%C3%A3o%20de%20tarefas.png" alt="">
+        <div class="foot"><b>Robôs →</b><span>RPA.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tecnologias -->
+<section class="tech">
+  <div class="wrap">
+    <span class="chip reveal">Algumas ferramentas</span>
+    <h2 class="reveal">Tecnologias<i>.</i></h2>
+    <div class="tgrid reveal">
+      <div class="t"><span class="ic">🟠</span><span>HTML5</span></div>
+      <div class="t"><span class="ic">🔵</span><span>CSS3</span></div>
+      <div class="t"><span class="ic">🟡</span><span>JavaScript</span></div>
+      <div class="t"><span class="ic">🔷</span><span>TypeScript</span></div>
+      <div class="t"><span class="ic">⚛️</span><span>React / Next.js</span></div>
+      <div class="t"><span class="ic">🐍</span><span>Python</span></div>
+      <div class="t"><span class="ic">🗄️</span><span>Supabase</span></div>
+      <div class="t"><span class="ic">🐘</span><span>PostgreSQL</span></div>
+      <div class="t"><span class="ic">📊</span><span>Power BI</span></div>
+      <div class="t"><span class="ic">💬</span><span>WhatsApp API</span></div>
+      <div class="t"><span class="ic">🤖</span><span>IA / Agentes</span></div>
+      <div class="t"><span class="ic">🐙</span><span>GitHub</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <h2 class="reveal">Pronto para <span>digitalizar</span> sua empresa?</h2>
+  <a class="reveal" href="https://wa.me/5541999286812" target="_blank">💬 Pedir orçamento</a>
+</div>
+
+<footer><b>VALORA</b> · Tecnologia &amp; Sistemas · valorasistemas@gmail.com</footer>
+
+<script>
+setTimeout(()=>{document.getElementById('loader').classList.add('off')},1150);
+setTimeout(()=>{document.getElementById('loader').remove()},1750);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('#links a').forEach(a=>a.onclick=()=>document.getElementById('links').classList.remove('open'));
+</script>
+</body>
+</html>
