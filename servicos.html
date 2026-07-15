@@ -58,8 +58,12 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
 .explore{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.16em;
   text-transform:uppercase;font-size:.9rem;color:#10151d;border-bottom:2.5px solid #10151d;padding-bottom:4px;transition:.2s}
 .explore:hover{color:var(--accent);border-color:var(--accent)}
-.ghostword{position:absolute;bottom:-10px;right:0;font-size:clamp(3rem,9vw,7rem);font-weight:800;
-  color:transparent;-webkit-text-stroke:1.5px rgba(16,21,29,.15);white-space:nowrap;pointer-events:none}
+.ghostroll{position:absolute;bottom:14px;left:0;right:0;overflow:hidden;white-space:nowrap;pointer-events:none}
+.ghostroll div{display:inline-block;animation:slide 24s linear infinite;
+  font-size:clamp(3rem,8vw,6rem);font-weight:800;text-transform:uppercase}
+.ghostroll b{color:transparent;-webkit-text-stroke:1.5px rgba(16,21,29,.28);margin-right:56px}
+.ghostroll i{font-style:normal;color:rgba(16,21,29,.88);margin-right:56px}
+@keyframes slide{to{transform:translateX(-50%)}}
 @media(max-width:880px){.split{grid-template-columns:1fr}.split .left{min-height:44svh}}
 
 /* Serviços em destaque */
@@ -143,7 +147,7 @@ footer b{color:var(--text);letter-spacing:.25em}
 <section class="split">
   <div class="left">
     <video autoplay muted loop playsinline onerror="this.remove()">
-      <source src="https://lpljcfvhwwpgqeyincub.supabase.co/storage/v1/object/public/backgrounds/valora-hero.mp4" type="video/mp4">
+      <source src="https://lpljcfvhwwpgqeyincub.supabase.co/storage/v1/object/public/backgrounds/servicos.mp4" type="video/mp4">
     </video>
   </div>
   <div class="right" style="position:relative;overflow:hidden">
@@ -152,7 +156,7 @@ footer b{color:var(--text);letter-spacing:.25em}
       <h1>Conectamos seu negócio ao mundo digital<i>.</i></h1>
       <a class="explore" href="#destaque">Explore ↓</a>
     </div>
-    <span class="ghostword">Estratégia</span>
+    <div class="ghostroll"><div><b>Estratégia</b><i>Inovação</i><b>Valor</b><i>Estratégia</i><b>Estratégia</b><i>Inovação</i><b>Valor</b><i>Estratégia</i></div></div>
   </div>
 </section>
 
