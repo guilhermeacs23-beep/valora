@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VALORA — Tecnologia &amp; Sistemas</title>
+<meta name="description" content="Valora — Sistemas de gestão, sites, apps, CRM, automação, dados e IA para o seu negócio.">
+<style>
+:root{
+  --bg:#05080f; --panel:#0b1220; --accent:#2ea8ff; --accent2:#8fd6ff;
+  --text:#f2f6fb; --muted:#9db0c9; --line:rgba(143,214,255,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ============ NAV (pílula flutuante) ============ */
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1180px,calc(100% - 24px));
+  z-index:100;background:rgba(6,10,18,.72);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:18px;
+  display:flex;align-items:center;justify-content:space-between;padding:14px 26px}
+nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.35em;font-size:1.05rem}
+nav .brand img.logoimg{height:52px;margin:-11px 0;filter:drop-shadow(0 0 10px rgba(46,168,255,.45))}
+nav .brand b{color:var(--accent)}
+nav .links{display:flex;gap:4px;align-items:center}
+nav .links a{font-size:.78rem;letter-spacing:.14em;font-weight:600;text-transform:uppercase;
+  padding:8px 14px;border-radius:99px;color:var(--muted);transition:.2s}
+nav .links a:hover{color:var(--text);background:rgba(46,168,255,.1)}
+nav .cta-mini{font-size:.75rem;letter-spacing:.1em;font-weight:700;text-transform:uppercase;
+  padding:9px 18px;border-radius:99px;background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;transition:.2s}
+nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55);transform:translateY(-1px)}
+.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+@media(max-width:900px){
+  nav .links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;
+    background:rgba(6,10,18,.96);border:1px solid var(--line);border-radius:16px;
+    flex-direction:column;padding:14px;gap:2px}
+  nav .links.open{display:flex}
+  nav .links a{width:100%;text-align:center;padding:12px}
+  .menu-btn{display:block}
+}
+
+/* ============ HERO ============ */
+.hero{position:relative;height:100svh;min-height:640px;display:flex;align-items:center;overflow:hidden}
+.hero video,.hero canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(5,8,15,.55) 0%,rgba(5,8,15,.25) 40%,rgba(5,8,15,.8) 100%)}
+.slidebox{position:relative;z-index:5;width:100%}
+.slide{display:none;max-width:760px;padding:46px 50px;border-radius:26px;
+  background:rgba(10,16,28,.42);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.08);position:relative}
+.slide.on{display:block;animation:rise .6s cubic-bezier(.22,.9,.3,1) both}
+@keyframes rise{from{opacity:.2;transform:translateX(100vw)}to{opacity:1;transform:none}}
+.slide .vlabel{position:absolute;left:18px;top:50%;transform:translateY(-50%) rotate(180deg);
+  writing-mode:vertical-rl;font-size:.68rem;letter-spacing:.35em;color:var(--muted);text-transform:uppercase}
+.slide h2{font-size:clamp(2.4rem,6.2vw,4.6rem);line-height:1.02;text-transform:uppercase;
+  font-weight:800;letter-spacing:.01em;margin-bottom:18px}
+.slide h2 span{display:block;background:linear-gradient(90deg,var(--accent),var(--accent2),#b8a7ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.slide p{font-size:.92rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#d7e5f5;max-width:520px}
+.dots{position:absolute;right:26px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:14px}
+.dots button{width:9px;height:9px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:transparent;cursor:pointer;transition:.25s}
+.dots button.on{background:var(--accent);border-color:var(--accent);box-shadow:0 0 10px var(--accent)}
+.hero .down{position:absolute;left:26px;bottom:26px;z-index:6;width:52px;height:52px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(6,10,18,.6);display:grid;place-items:center;color:var(--text);
+  animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+@media(max-width:640px){
+  .slide{padding:36px 28px 36px 44px;margin:0 6px}
+  .dots{right:12px}
+}
+
+/* ============ BLOCO BRANCO — QUEM SOMOS ============ */
+.white{background:#e9eaec;color:#10151d;padding:90px 0}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;
+  border:1.5px solid #0f7ac2;color:#0f7ac2;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:#0f7ac2}
+.white .cols{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;margin-top:34px}
+.white h2{font-size:clamp(2.3rem,5vw,3.6rem);font-weight:800;line-height:1.05}
+.white h2 i{color:var(--accent);font-style:normal}
+.white .cols p{margin-top:22px;color:#3d4a5c;font-size:1.05rem;max-width:560px}
+.white .more{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;font-size:.85rem;border-bottom:2.5px solid #10151d;padding-bottom:3px;color:#10151d;transition:.2s}
+.white .more:hover{color:var(--accent);border-color:var(--accent)}
+.mascots{display:block;width:132%;max-width:none;margin:-30px -16%;
+  -webkit-mask-image:radial-gradient(ellipse 72% 72% at 50% 50%,#000 55%,transparent 99%);
+  mask-image:radial-gradient(ellipse 72% 72% at 50% 50%,#000 55%,transparent 99%)}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+@media(max-width:760px){.statgrid{grid-template-columns:1fr 1fr}}
+.stat{background:#fff;border:1px solid #e3e9f1;border-radius:18px;padding:26px 22px;box-shadow:0 8px 26px rgba(16,21,29,.06);
+  cursor:default;transition:background .35s,border-color .35s,transform .35s}
+.stat b{display:block;font-size:2rem;color:var(--accent);transition:color .35s}
+.stat span{color:#5b6b80;font-size:.86rem;transition:color .35s}
+.stat:hover{background:linear-gradient(135deg,#1487e0,#2ea8ff);border-color:var(--accent);transform:translateY(-5px);
+  animation:sparkle 1.4s ease-in-out infinite}
+.stat:hover b{color:#fff}
+.stat:hover span{color:#e3f2ff}
+@keyframes sparkle{
+  0%,100%{box-shadow:0 10px 30px rgba(46,168,255,.45),0 0 18px rgba(46,168,255,.55)}
+  50%{box-shadow:0 10px 34px rgba(46,168,255,.65),0 0 42px rgba(143,214,255,.95)}
+}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:78px}
+.pillar .ic{font-size:2rem}
+.pillar h3{font-size:1.35rem;font-weight:800;margin:10px 0 0}
+.pillar h3 i{color:var(--accent);font-style:normal}
+.pillar hr{border:none;border-top:2px solid var(--accent);margin:16px 0;opacity:.7}
+.pillar p{color:#3d4a5c;font-size:.98rem}
+@media(max-width:900px){
+  .white .cols{grid-template-columns:1fr;gap:36px}
+  .pillars{grid-template-columns:1fr;gap:30px;margin-top:56px}
+}
+
+/* ============ BLOCO PRETO — SERVIÇOS ============ */
+.dark{background:#07090d;padding:96px 0;position:relative}
+.dark .head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:48px}
+.dark h2{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:800;min-height:1.2em}
+.caret{display:inline-block;width:5px;height:.95em;margin-left:6px;background:var(--accent);
+  vertical-align:-.08em;border-radius:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.chip.lt{border-color:var(--accent2);color:var(--accent2)}
+.chip.lt::before{background:var(--accent2)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.svc{background:#0d1117;border:1px solid #1c2430;border-radius:20px;padding:40px 32px;transition:.25s;position:relative;overflow:hidden}
+.svc::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:.25s}
+.svc:hover{transform:translateY(-6px);border-color:rgba(46,168,255,.45);box-shadow:0 18px 44px rgba(0,0,0,.5)}
+.svc:hover::after{opacity:1}
+.svc .ic{font-size:2.3rem;display:block;margin-bottom:40px;opacity:.95}
+.svc h3{font-size:1.3rem;font-weight:800;margin-bottom:20px}
+.svc h3 i{color:var(--accent);font-style:normal}
+.svc li{list-style:none;display:flex;gap:10px;align-items:baseline;color:#b6c4d6;font-size:.94rem;padding:7px 0}
+.svc li::before{content:"✓";color:var(--accent);font-weight:800}
+@media(max-width:960px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.svc-grid{grid-template-columns:1fr}}
+
+/* ============ PORTFÓLIO CARROSSEL ============ */
+.folio{background:#07090d;padding:0 0 100px}
+.folio .head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:44px}
+.folio h2{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:800}
+.marquee{overflow:hidden;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:0;width:max-content;animation:roll 110s linear infinite}
+@keyframes roll{to{transform:translateX(-50%)}}
+.work{width:min(88vw,470px);height:470px;border-radius:0;padding:30px;display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;overflow:hidden;background:#000;flex-shrink:0}
+.work img.ph{position:absolute;left:30px;right:30px;top:30px;height:calc(100% - 185px);width:calc(100% - 60px);
+  object-fit:contain;object-position:center top}
+.work .cat,.work h3,.work p{position:relative;z-index:2}
+.work .cat{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent2);font-weight:700}
+.work h3{font-size:1.55rem;font-weight:800;margin:5px 0 6px;color:#fff}
+.work p{font-size:.9rem;color:rgba(255,255,255,.75);max-width:400px}
+@media(max-width:640px){.work{height:420px;padding:22px}.work h3{font-size:1.3rem}}
+
+/* ============ CTA FINAL ============ */
+.final{background:#050608;padding:130px 0 90px;text-align:center;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:72px 72px}
+.final h2{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;position:relative}
+.final h2 .ghost{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.65)}
+.orb{position:relative;margin:64px auto 0;width:230px;height:230px;border-radius:50%;
+  display:block;overflow:hidden;border:1px solid rgba(46,168,255,.35);
+  transition:.3s;box-shadow:0 0 40px rgba(46,168,255,.25)}
+.orb video{width:100%;height:100%;object-fit:cover}
+.orb:hover{border-color:var(--accent);box-shadow:0 0 70px rgba(46,168,255,.7);transform:scale(1.06)}
+.orb-label{position:absolute;left:0;right:0;bottom:16px;text-align:center;
+  font-size:.68rem;letter-spacing:.16em;font-weight:700;text-transform:uppercase;color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,.9)}
+.fale{position:relative;margin-top:110px}
+.fale h3{font-size:clamp(2rem,4.5vw,3rem);font-weight:800}
+.fale h3 i{color:var(--accent);font-style:normal}
+.fale p{color:var(--muted);margin:10px 0 30px}
+.fale .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.fale a{display:inline-flex;align-items:center;gap:10px;padding:15px 34px;border-radius:99px;font-weight:700;font-size:.95rem;transition:.25s}
+.fale .zap{background:#22c35e;color:#fff}
+.fale .zap:hover{box-shadow:0 0 34px rgba(34,195,94,.55);transform:translateY(-2px)}
+.fale .mail{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.03)}
+.fale .mail:hover{border-color:var(--accent);box-shadow:0 0 22px rgba(46,168,255,.35)}
+footer{background:#050608;border-top:1px solid rgba(255,255,255,.07);padding:28px 0;text-align:center;color:var(--muted);font-size:.85rem}
+footer b{color:var(--text);letter-spacing:.25em}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#home">
+    <img class="logoimg" src="VALORA%20LOGO.png" alt="VALORA">
+  </a>
+  <div class="links" id="links">
+    <a href="#home">Home</a>
+    <a href="#quemsomos">A Valora</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#portfolio">Portfólio</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a class="cta-mini" href="https://wa.me/5541999286812" target="_blank">Orçamento</a>
+    <button class="menu-btn" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <canvas id="net"></canvas>
+  <video autoplay muted loop playsinline poster="" onerror="this.remove()">
+    <source src="7170790-uhd_4096_2160_25fps.mp4" type="video/mp4">
+    <source src="bg.mp4" type="video/mp4">
+  </video>
+  <div class="shade"></div>
+
+  <div class="wrap slidebox">
+    <div class="slide on">
+      <span class="vlabel">Gestão</span>
+      <h2>Sistemas<span>de Gestão</span></h2>
+      <p>Estética automotiva, studios de beleza, lojas de roupas e consignação — sua operação inteira, sem planilhas.</p>
+    </div>
+    <div class="slide">
+      <span class="vlabel">Web</span>
+      <h2>Sites &amp;<span>Landing Pages</span></h2>
+      <p>Presença digital profissional, páginas de alta conversão e e-commerce integrado ao seu negócio.</p>
+    </div>
+    <div class="slide">
+      <span class="vlabel">Mobile</span>
+      <h2>Aplicativos<span>Sob Medida</span></h2>
+      <p>Apps Android e PWA, com localização de entregas em tempo real e integração total aos seus sistemas.</p>
+    </div>
+    <div class="slide">
+      <span class="vlabel">Vendas</span>
+      <h2>CRM &amp;<span>WhatsApp</span></h2>
+      <p>Funil de vendas, gestão de leads, chatbots e atendimento automático 24 horas por dia.</p>
+    </div>
+    <div class="slide">
+      <span class="vlabel">Dados</span>
+      <h2>Power BI<span>Dados &amp; IA</span></h2>
+      <p>Dashboards gerenciais, bases de dados estruturadas e agentes de IA trabalhando pela sua empresa.</p>
+    </div>
+    <div class="slide">
+      <span class="vlabel">Automação</span>
+      <h2>Robôs de<span>Automação</span></h2>
+      <p>Rotinas online automatizadas, integração de pagamentos Pix e cobranças sem esforço manual.</p>
+    </div>
+  </div>
+
+  <div class="dots" id="dots"></div>
+  <a class="down" href="#quemsomos">↓</a>
+</section>
+
+<!-- ================= QUEM SOMOS (branco) ================= -->
+<section class="white" id="quemsomos">
+  <div class="wrap">
+    <span class="chip reveal">A Valora</span>
+    <div class="cols">
+      <div class="reveal">
+        <h2>Quem Somos<i>.</i></h2>
+        <p>Somos especializados em transformar operações com tecnologia: sistemas de gestão para nichos específicos, sites, aplicativos, automações e inteligência de dados. Nosso objetivo é substituir processos manuais por soluções auditáveis, integradas e acessíveis de qualquer lugar.</p>
+        <p>Do pequeno empreendedor à empresa que precisa de BI e integração entre setores — entregamos tecnologia de ponta com implantação rápida e suporte próximo.</p>
+        <a class="more" href="#servicos">Saiba mais ↗</a>
+      </div>
+      <div class="reveal">
+        <video class="mascots" autoplay muted loop playsinline onerror="this.remove()">
+          <source src="fa%C3%A7a_dessa_imagem_um_video_ani.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="statgrid reveal">
+      <div class="stat"><b>17+</b><span>soluções no portfólio</span></div>
+      <div class="stat"><b>6</b><span>áreas de atuação</span></div>
+      <div class="stat"><b>100%</b><span>sob medida para o cliente</span></div>
+      <div class="stat"><b>24h</b><span>automação e atendimento</span></div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal"><span class="ic">🖥️</span>
+        <h3>Sistemas Digitais<i>.</i></h3><hr>
+        <p>Sistemas de gestão completos que organizam estoque, caixa, agenda, ordens de serviço e clientes em um só lugar.</p>
+      </div>
+      <div class="pillar reveal"><span class="ic">📊</span>
+        <h3>Dados &amp; Inteligência<i>.</i></h3><hr>
+        <p>Power BI, bases de dados estruturadas e agentes de IA que transformam informação em decisão rápida.</p>
+      </div>
+      <div class="pillar reveal"><span class="ic">⚙️</span>
+        <h3>Automação<i>.</i></h3><hr>
+        <p>Robôs que executam rotinas repetitivas, integração de pagamentos e atendimento automático via WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVIÇOS (preto) ================= -->
+<section class="dark" id="servicos">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="chip lt reveal">O que fazemos</span>
+        <h2 class="reveal" style="margin-top:16px"><span id="typew"></span><span class="caret"></span></h2>
+      </div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal"><span class="ic">🗂️</span>
+        <h3>Sistemas de Gestão<i>.</i></h3>
+        <ul>
+          <li>Estética automotiva (OS, agenda, painel TV)</li>
+          <li>Studio de beleza (agenda e comissões)</li>
+          <li>Loja de roupas &amp; consignação</li>
+          <li>Agendamento online com lembretes</li>
+          <li>Caixa, estoque e contas a pagar</li>
+        </ul>
+      </div>
+      <div class="svc reveal"><span class="ic">🌐</span>
+        <h3>Web &amp; E-commerce<i>.</i></h3>
+        <ul>
+          <li>Sites institucionais responsivos</li>
+          <li>Landing pages de alta conversão</li>
+          <li>Loja virtual com Pix e cartão</li>
+          <li>SEO e integração com anúncios</li>
+          <li>Funis de captura de leads</li>
+        </ul>
+      </div>
+      <div class="svc reveal"><span class="ic">📱</span>
+        <h3>Aplicativos<i>.</i></h3>
+        <ul>
+          <li>Apps Android / PWA sob medida</li>
+          <li>Localização de entregas em tempo real</li>
+          <li>Rotas e equipes externas</li>
+          <li>Do conceito à publicação</li>
+        </ul>
+      </div>
+      <div class="svc reveal"><span class="ic">💼</span>
+        <h3>CRM &amp; Vendas<i>.</i></h3>
+        <ul>
+          <li>Funil de vendas e gestão de leads</li>
+          <li>Chatbots e WhatsApp automático</li>
+          <li>Disparo de campanhas</li>
+          <li>Metas, comissões e relatórios</li>
+        </ul>
+      </div>
+      <div class="svc reveal"><span class="ic">🧠</span>
+        <h3>Dados &amp; IA<i>.</i></h3>
+        <ul>
+          <li>Dashboards Power BI</li>
+          <li>Bases de dados estruturadas</li>
+          <li>Agentes de IA personalizados</li>
+          <li>Painéis vivos (artifacts)</li>
+        </ul>
+      </div>
+      <div class="svc reveal"><span class="ic">🤖</span>
+        <h3>Automação<i>.</i></h3>
+        <ul>
+          <li>Robôs de rotinas online</li>
+          <li>Emissões, consultas e planilhas</li>
+          <li>Integração de pagamentos Pix</li>
+          <li>Cobrança e lembretes automáticos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFÓLIO (carrossel) ================= -->
+<section class="folio" id="portfolio">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="chip lt reveal">Cases</span>
+        <h2 class="reveal" style="margin-top:16px;min-height:1.2em"><span id="typew2"></span><span class="caret"></span></h2>
+      </div>
+    </div>
+  </div>
+  <div class="marquee reveal">
+    <div class="track" id="track">
+      <div class="work w1"><img class="ph" loading="lazy" onerror="this.remove()" src="Estetica%20automotiva.png" alt=""><span class="cat">Sistema Web + PWA</span><h3>Estética Automotiva</h3><p>OS com fotos, orçamentos, agenda, painel TV e modo técnico no celular.</p></div>
+      <div class="work w2"><img class="ph" loading="lazy" onerror="this.remove()" src="studio.png" alt=""><span class="cat">Sistema de Gestão</span><h3>Studio de Beleza</h3><p>Gestão completa: clientes, serviços, comissões e caixa em um só lugar.</p></div>
+      <div class="work w7"><img class="ph" loading="lazy" onerror="this.remove()" src="AGENDA%20Studio.png" alt=""><span class="cat">Agendamento</span><h3>Agenda Inteligente</h3><p>Agenda de profissionais com confirmação e lembretes automáticos.</p></div>
+      <div class="work w3"><img class="ph" loading="lazy" onerror="this.remove()" src="sistema%20de%20conversas%20Whats.png" alt=""><span class="cat">Automação</span><h3>Atendimento WhatsApp</h3><p>Central de conversas com qualificação de leads e respostas 24h.</p></div>
+      <div class="work w5"><img class="ph" loading="lazy" onerror="this.remove()" src="RObo%20de%20atendimento.png" alt=""><span class="cat">Inteligência Artificial</span><h3>Robô de Atendimento</h3><p>IA que atende, entende e responde seus clientes automaticamente.</p></div>
+      <div class="work w4"><img class="ph" loading="lazy" onerror="this.remove()" src="Power%20Bi%20-%20financeiro.png" alt=""><span class="cat">Business Intelligence</span><h3>Power BI Financeiro</h3><p>Faturamento, custos e desempenho em painéis gerenciais automáticos.</p></div>
+      <div class="work w6"><img class="ph" loading="lazy" onerror="this.remove()" src="CRM%20-%20vendas.png" alt=""><span class="cat">Sistema de Vendas</span><h3>CRM Comercial</h3><p>Gestão de leads, follow-up e relatórios para equipe comercial.</p></div>
+      <div class="work w1"><img class="ph" loading="lazy" onerror="this.remove()" src="CRM%20funil%20de%20vendas.png" alt=""><span class="cat">CRM</span><h3>Funil de Vendas</h3><p>Visualize cada etapa da negociação e não perca nenhuma oportunidade.</p></div>
+      <div class="work w2"><img class="ph" loading="lazy" onerror="this.remove()" src="Site%20-%20empresarial.png" alt=""><span class="cat">Web</span><h3>Site Empresarial</h3><p>Presença digital profissional, rápida e responsiva para sua empresa.</p></div>
+      <div class="work w3"><img class="ph" loading="lazy" onerror="this.remove()" src="Site%20-%20consultoria.png" alt=""><span class="cat">Web</span><h3>Site Consultoria</h3><p>Sites que transmitem autoridade e convertem visitantes em clientes.</p></div>
+      <div class="work w4"><img class="ph" loading="lazy" onerror="this.remove()" src="Sistema%20de%20Or%C3%A7amentos.png" alt=""><span class="cat">Gestão</span><h3>Sistema de Orçamentos</h3><p>Orçamentos profissionais gerados em minutos, prontos para enviar.</p></div>
+      <div class="work w5"><img class="ph" loading="lazy" onerror="this.remove()" src="ROBOS%20-%20Automa%C3%A7%C3%A3o%20de%20tarefas.png" alt=""><span class="cat">RPA</span><h3>Automação de Tarefas</h3><p>Robôs executando rotinas repetitivas: emissões, consultas e integrações.</p></div>
+      <div class="work w6"><img class="ph" loading="lazy" onerror="this.remove()" src="Sistema%20de%20automa%C3%A7%C3%A3o.png" alt=""><span class="cat">RPA</span><h3>Sistema de Automação</h3><p>Fluxos automáticos que conectam seus sistemas e eliminam retrabalho.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA FINAL ================= -->
+<section class="final" id="contato">
+  <div class="wrap">
+    <h2 class="reveal">Tem um <span class="ghost">projeto</span> em mente?</h2>
+    <a class="orb reveal" href="https://wa.me/5541999286812" target="_blank" title="Entre em contato">
+      <video autoplay muted loop playsinline onerror="this.remove()">
+        <source src="Uma_logo_futuristica_e_tecnolo.mp4" type="video/mp4">
+      </video>
+      <span class="orb-label">Entre em contato ↗</span>
+    </a>
+
+    <div class="fale reveal">
+      <h3>Fale <i>Conosco</i></h3>
+      <p>Tire suas dúvidas sobre serviços, orçamentos e muito mais!</p>
+      <div class="btns">
+        <a class="zap" href="https://wa.me/5541999286812" target="_blank">💬 WhatsApp</a>
+        <a class="mail" href="mailto:valorasistemas@gmail.com">✉️ valorasistemas@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><b>VALORA</b> · Tecnologia &amp; Sistemas · valorasistemas@gmail.com</footer>
+
+<script>
+/* ---- Hero: slides rotativos ---- */
+const slides=[...document.querySelectorAll('.slide')];
+const dotsBox=document.getElementById('dots');
+slides.forEach((_,i)=>{
+  const b=document.createElement('button');
+  if(i===0)b.classList.add('on');
+  b.onclick=()=>go(i,true);
+  dotsBox.appendChild(b);
+});
+const dots=[...dotsBox.children];
+let cur=0,timer=setInterval(()=>go(cur+1),5200);
+function go(i,manual){
+  cur=(i+slides.length)%slides.length;
+  slides.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  dots.forEach((d,k)=>d.classList.toggle('on',k===cur));
+  if(manual){clearInterval(timer);timer=setInterval(()=>go(cur+1),5200)}
+}
+
+/* ---- Fundo: rede de partículas (fica atrás do vídeo; aparece se não houver bg.mp4) ---- */
+const cv=document.getElementById('net'),ctx=cv.getContext('2d');
+let W,H,pts=[];
+function size(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight}
+size();addEventListener('resize',size);
+for(let i=0;i<70;i++)pts.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0006,vy:(Math.random()-.5)*.0006});
+(function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#0a1424';ctx.fillRect(0,0,W,H);
+  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>1)p.vx*=-1;if(p.y<0||p.y>1)p.vy*=-1});
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i];
+    for(let j=i+1;j<pts.length;j++){
+      const b=pts[j],dx=(a.x-b.x)*W,dy=(a.y-b.y)*H,d=Math.hypot(dx,dy);
+      if(d<170){ctx.strokeStyle=`rgba(46,168,255,${(1-d/170)*.35})`;ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b.x*W,b.y*H);ctx.stroke()}
+    }
+    ctx.fillStyle='rgba(143,214,255,.8)';
+    ctx.beginPath();ctx.arc(a.x*W,a.y*H,1.8,0,7);ctx.fill();
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ---- Carrossel: duplica a trilha para loop infinito ---- */
+const track=document.getElementById('track');
+track.innerHTML+=track.innerHTML;
+
+/* ---- Máquina de escrever ---- */
+function typewriter(el,word){
+  let ti=0,del=false;
+  (function type(){
+    el.textContent=word.slice(0,ti);
+    let wait=del?70:150;
+    if(!del&&ti===word.length){del=true;wait=2200}
+    else if(del&&ti===0){del=false;wait=700}
+    ti+=del?-1:1;
+    setTimeout(type,wait);
+  })();
+}
+typewriter(document.getElementById('typew'),'Serviços');
+typewriter(document.getElementById('typew2'),'Portfólio');
+
+/* ---- Reveal ao rolar ---- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---- Fecha menu mobile ao clicar ---- */
+document.querySelectorAll('#links a').forEach(a=>a.onclick=()=>document.getElementById('links').classList.remove('open'));
+</script>
+</body>
+</html>
