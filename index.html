@@ -111,7 +111,8 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55);transform:translate
   50%{box-shadow:0 10px 34px rgba(46,168,255,.65),0 0 42px rgba(143,214,255,.95)}
 }
 .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:78px}
-.pillar .ic{font-size:2rem}
+.pillar .ic{display:block;width:44px;height:44px;color:var(--accent)}
+.pillar .ic svg{width:100%;height:100%}
 .pillar h3{font-size:1.35rem;font-weight:800;margin:10px 0 0}
 .pillar h3 i{color:var(--accent);font-style:normal}
 .pillar hr{border:none;border-top:2px solid var(--accent);margin:16px 0;opacity:.7}
@@ -135,7 +136,8 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55);transform:translate
 .svc::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:.25s}
 .svc:hover{transform:translateY(-6px);border-color:rgba(46,168,255,.45);box-shadow:0 18px 44px rgba(0,0,0,.5)}
 .svc:hover::after{opacity:1}
-.svc .ic{font-size:2.3rem;display:block;margin-bottom:40px;opacity:.95}
+.svc .ic{display:block;width:52px;height:52px;margin-bottom:40px;color:var(--accent2)}
+.svc .ic svg{width:100%;height:100%}
 .svc h3{font-size:1.3rem;font-weight:800;margin-bottom:20px}
 .svc h3 i{color:var(--accent);font-style:normal}
 .svc li{list-style:none;display:flex;gap:10px;align-items:baseline;color:#b6c4d6;font-size:.94rem;padding:7px 0}
@@ -285,15 +287,15 @@ footer b{color:var(--text);letter-spacing:.25em}
     </div>
 
     <div class="pillars">
-      <div class="pillar reveal"><span class="ic">🖥️</span>
+      <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M12 16.5v3M8.5 19.5h7M6.5 8.5H11M6.5 11.5h6M14.5 8.5h3"/></svg></span>
         <h3>Sistemas Digitais<i>.</i></h3><hr>
         <p>Sistemas de gestão completos que organizam estoque, caixa, agenda, ordens de serviço e clientes em um só lugar.</p>
       </div>
-      <div class="pillar reveal"><span class="ic">📊</span>
+      <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5v-6.5M9.5 19.5V8M14.5 19.5v-4.5M19.5 19.5v-14M3 19.5h18"/></svg></span>
         <h3>Dados &amp; Inteligência<i>.</i></h3><hr>
         <p>Power BI, bases de dados estruturadas e agentes de IA que transformam informação em decisão rápida.</p>
       </div>
-      <div class="pillar reveal"><span class="ic">⚙️</span>
+      <div class="pillar reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8.5" width="12" height="9" rx="2.2"/><circle cx="9.7" cy="12.7" r=".9" fill="currentColor" stroke="none"/><circle cx="14.3" cy="12.7" r=".9" fill="currentColor" stroke="none"/><path d="M12 8.5V6M6 12.5H3.8M18 12.5h2.2M9.5 15.3h5"/><circle cx="12" cy="4.8" r="1.1"/></svg></span>
         <h3>Automação<i>.</i></h3><hr>
         <p>Robôs que executam rotinas repetitivas, integração de pagamentos e atendimento automático via WhatsApp.</p>
       </div>
@@ -311,7 +313,7 @@ footer b{color:var(--text);letter-spacing:.25em}
       </div>
     </div>
     <div class="svc-grid">
-      <div class="svc reveal"><span class="ic">🗂️</span>
+      <div class="svc reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M12 16.5v3M8.5 19.5h7M6.5 8.5H11M6.5 11.5h6M14.5 8.5h3"/></svg></span>
         <h3>Sistemas de Gestão<i>.</i></h3>
         <ul>
           <li>Estética automotiva (OS, agenda, painel TV)</li>
@@ -321,7 +323,7 @@ footer b{color:var(--text);letter-spacing:.25em}
           <li>Caixa, estoque e contas a pagar</li>
         </ul>
       </div>
-      <div class="svc reveal"><span class="ic">🌐</span>
+      <div class="svc reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c-3.2 3-3.2 14 0 17M12 3.5c3.2 3 3.2 14 0 17"/></svg></span>
         <h3>Web &amp; E-commerce<i>.</i></h3>
         <ul>
           <li>Sites institucionais responsivos</li>
@@ -331,7 +333,7 @@ footer b{color:var(--text);letter-spacing:.25em}
           <li>Funis de captura de leads</li>
         </ul>
       </div>
-      <div class="svc reveal"><span class="ic">📱</span>
+      <div class="svc reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.4"/><path d="M12 13.6c1.8-1.6 2.8-2.8 2.8-4.2A2.8 2.8 0 0 0 12 6.6a2.8 2.8 0 0 0-2.8 2.8c0 1.4 1 2.6 2.8 4.2zM12 18.6h.01"/></svg></span>
         <h3>Aplicativos<i>.</i></h3>
         <ul>
           <li>Apps Android / PWA sob medida</li>
@@ -340,7 +342,7 @@ footer b{color:var(--text);letter-spacing:.25em}
           <li>Do conceito à publicação</li>
         </ul>
       </div>
-      <div class="svc reveal"><span class="ic">💼</span>
+      <div class="svc reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h16l-6.2 7.2v5.6l-3.6 2.2v-7.8L4 4.5z"/></svg></span>
         <h3>CRM &amp; Vendas<i>.</i></h3>
         <ul>
           <li>Funil de vendas e gestão de leads</li>
@@ -349,7 +351,7 @@ footer b{color:var(--text);letter-spacing:.25em}
           <li>Metas, comissões e relatórios</li>
         </ul>
       </div>
-      <div class="svc reveal"><span class="ic">🧠</span>
+      <div class="svc reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5v-6.5M9.5 19.5V8M14.5 19.5v-4.5M19.5 19.5v-14M3 19.5h18"/></svg></span>
         <h3>Dados &amp; IA<i>.</i></h3>
         <ul>
           <li>Dashboards Power BI</li>
@@ -358,7 +360,7 @@ footer b{color:var(--text);letter-spacing:.25em}
           <li>Painéis vivos (artifacts)</li>
         </ul>
       </div>
-      <div class="svc reveal"><span class="ic">🤖</span>
+      <div class="svc reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8.5" width="12" height="9" rx="2.2"/><circle cx="9.7" cy="12.7" r=".9" fill="currentColor" stroke="none"/><circle cx="14.3" cy="12.7" r=".9" fill="currentColor" stroke="none"/><path d="M12 8.5V6M6 12.5H3.8M18 12.5h2.2M9.5 15.3h5"/><circle cx="12" cy="4.8" r="1.1"/></svg></span>
         <h3>Automação<i>.</i></h3>
         <ul>
           <li>Robôs de rotinas online</li>

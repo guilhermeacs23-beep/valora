@@ -78,7 +78,8 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
 .rows .row{display:grid;grid-template-columns:60px 200px 1fr;gap:22px;align-items:center;
   padding:26px 0;border-bottom:1px solid #1c2430;transition:.25s}
 .rows .row:hover{padding-left:10px;border-color:var(--accent)}
-.rows .ic{font-size:1.9rem}
+.rows .ic{width:46px;height:46px;color:var(--accent2)}
+.rows .ic svg{width:100%;height:100%}
 .rows h3{font-size:1.15rem;font-weight:700}
 .rows p{color:#b6c4d6;font-size:.93rem}
 @media(max-width:880px){
@@ -108,7 +109,9 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
 .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;margin-top:44px}
 .t{background:#0d1117;border:1px solid #1c2430;border-radius:16px;padding:26px 14px;text-align:center;transition:.25s}
 .t:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 0 22px rgba(46,168,255,.25)}
-.t .ic{font-size:2rem;display:block;margin-bottom:10px}
+.t .ic{display:block;margin:0 auto 12px;width:40px;height:40px;opacity:.85}
+.t img.ic{filter:grayscale(1) brightness(1.6)}
+.t svg.ic{color:#9db0c9}
 .t span{font-size:.88rem;color:#c4d2e4;font-weight:600}
 
 /* CTA */
@@ -169,12 +172,12 @@ footer b{color:var(--text);letter-spacing:.25em}
       <p class="sub">Da gestão do dia a dia à inteligência de dados: tudo integrado, auditável e acessível de qualquer lugar.</p>
     </div>
     <div class="rows reveal">
-      <div class="row"><span class="ic">🗂️</span><h3>Sistemas de Gestão</h3><p>Sistemas completos para estética automotiva, studios de beleza, lojas de roupas e consignação.</p></div>
-      <div class="row"><span class="ic">🌐</span><h3>Web &amp; E-commerce</h3><p>Sites, landing pages de alta conversão e loja virtual com Pix e cartão.</p></div>
-      <div class="row"><span class="ic">📱</span><h3>Aplicativos</h3><p>Apps Android/PWA sob medida e localização de entregas em tempo real.</p></div>
-      <div class="row"><span class="ic">💼</span><h3>CRM &amp; Vendas</h3><p>Funil de vendas, gestão de leads, chatbots e WhatsApp automático 24h.</p></div>
-      <div class="row"><span class="ic">🧠</span><h3>Dados &amp; IA</h3><p>Dashboards Power BI, bases de dados estruturadas e agentes de IA.</p></div>
-      <div class="row"><span class="ic">🤖</span><h3>Automação</h3><p>Robôs de rotinas online e integração de pagamentos com baixa automática.</p></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M12 16.5v3M8.5 19.5h7M6.5 8.5H11M6.5 11.5h6M14.5 8.5h3"/></svg></span><h3>Sistemas de Gestão</h3><p>Sistemas completos para estética automotiva, studios de beleza, lojas de roupas e consignação.</p></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c-3.2 3-3.2 14 0 17M12 3.5c3.2 3 3.2 14 0 17"/></svg></span><h3>Web &amp; E-commerce</h3><p>Sites, landing pages de alta conversão e loja virtual com Pix e cartão.</p></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.4"/><path d="M12 13.6c1.8-1.6 2.8-2.8 2.8-4.2A2.8 2.8 0 0 0 12 6.6a2.8 2.8 0 0 0-2.8 2.8c0 1.4 1 2.6 2.8 4.2zM12 18.6h.01"/></svg></span><h3>Aplicativos</h3><p>Apps Android/PWA sob medida e localização de entregas em tempo real.</p></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h16l-6.2 7.2v5.6l-3.6 2.2v-7.8L4 4.5z"/></svg></span><h3>CRM &amp; Vendas</h3><p>Funil de vendas, gestão de leads, chatbots e WhatsApp automático 24h.</p></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5v-6.5M9.5 19.5V8M14.5 19.5v-4.5M19.5 19.5v-14M3 19.5h18"/><circle cx="19.5" cy="3.2" r=".4" fill="currentColor"/></svg></span><h3>Dados &amp; IA</h3><p>Dashboards Power BI, bases de dados estruturadas e agentes de IA.</p></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8.5" width="12" height="9" rx="2.2"/><circle cx="9.7" cy="12.7" r=".9" fill="currentColor" stroke="none"/><circle cx="14.3" cy="12.7" r=".9" fill="currentColor" stroke="none"/><path d="M12 8.5V6M6 12.5H3.8M18 12.5h2.2M9.5 15.3h5"/><circle cx="12" cy="4.8" r="1.1"/></svg></span><h3>Automação</h3><p>Robôs de rotinas online e integração de pagamentos com baixa automática.</p></div>
     </div>
   </div>
 </section>
@@ -220,18 +223,18 @@ footer b{color:var(--text);letter-spacing:.25em}
     <span class="chip reveal">Algumas ferramentas</span>
     <h2 class="reveal">Tecnologias<i>.</i></h2>
     <div class="tgrid reveal">
-      <div class="t"><span class="ic">🟠</span><span>HTML5</span></div>
-      <div class="t"><span class="ic">🔵</span><span>CSS3</span></div>
-      <div class="t"><span class="ic">🟡</span><span>JavaScript</span></div>
-      <div class="t"><span class="ic">🔷</span><span>TypeScript</span></div>
-      <div class="t"><span class="ic">⚛️</span><span>React / Next.js</span></div>
-      <div class="t"><span class="ic">🐍</span><span>Python</span></div>
-      <div class="t"><span class="ic">🗄️</span><span>Supabase</span></div>
-      <div class="t"><span class="ic">🐘</span><span>PostgreSQL</span></div>
-      <div class="t"><span class="ic">📊</span><span>Power BI</span></div>
-      <div class="t"><span class="ic">💬</span><span>WhatsApp API</span></div>
-      <div class="t"><span class="ic">🤖</span><span>IA / Agentes</span></div>
-      <div class="t"><span class="ic">🐙</span><span>GitHub</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" onerror="this.style.display='none'" alt=""><span>HTML5</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" onerror="this.style.display='none'" alt=""><span>CSS3</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" onerror="this.style.display='none'" alt=""><span>JavaScript</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" onerror="this.style.display='none'" alt=""><span>TypeScript</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" onerror="this.style.display='none'" alt=""><span>React / Next.js</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" onerror="this.style.display='none'" alt=""><span>Python</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" onerror="this.style.display='none'" alt=""><span>Supabase</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" onerror="this.style.display='none'" alt=""><span>PostgreSQL</span></div>
+      <div class="t"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4.5 19.5v-6.5M9.5 19.5V8M14.5 19.5v-4.5M19.5 19.5v-14M3 19.5h18"/></svg><span>Power BI</span></div>
+      <div class="t"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 1 7.4 12.7L21 21l-4.9-1.4A8.5 8.5 0 1 1 12 3.5z"/><path d="M8.5 10.5h7M8.5 13.5h4.5"/></svg><span>WhatsApp API</span></div>
+      <div class="t"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8.5" width="12" height="9" rx="2.2"/><circle cx="9.7" cy="12.7" r=".9" fill="currentColor" stroke="none"/><circle cx="14.3" cy="12.7" r=".9" fill="currentColor" stroke="none"/><path d="M12 8.5V6"/><circle cx="12" cy="4.8" r="1.1"/></svg><span>IA / Agentes</span></div>
+      <div class="t"><img class="ic" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" onerror="this.style.display='none'" alt=""><span>GitHub</span></div>
     </div>
   </div>
 </section>
