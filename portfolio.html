@@ -67,29 +67,31 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
 
 /* Seção 2 — branca: dor x Valora resolve */
 .white2{background:#f2f4f7;color:#10151d;padding:90px 0}
-.duel-head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:8px}
-.duel-head h2{font-size:clamp(1.3rem,2.8vw,1.7rem);font-weight:800}
+.split2{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.duel-head{display:grid;grid-template-columns:1fr 64px;gap:14px;align-items:end;margin-bottom:8px}
+.duel-head h2{font-size:clamp(1.2rem,2.4vw,1.5rem);font-weight:800}
 .duel-head .red{color:#c8352e}
-.duel-head .blue{text-align:center}
+.duel-head .blue{grid-column:1 / -1;grid-row:1;justify-self:end;text-align:right}
 .duel-head .blue i{font-style:normal;color:var(--accent)}
+.duel-head .red{grid-row:1}
 .duel-rows{list-style:none}
-.duel-rows li{display:grid;grid-template-columns:24px 1fr 90px;gap:14px;align-items:center;
-  padding:13px 0;border-bottom:1.5px solid #e0e4ea;font-size:1.02rem;color:#2b3644}
+.duel-rows li{display:grid;grid-template-columns:22px 1fr 64px;gap:14px;align-items:center;
+  padding:12px 0;border-bottom:1.5px solid #e0e4ea;font-size:1rem;color:#2b3644}
 .duel-rows .x{color:#c8352e;font-weight:800}
-.duel-rows .vmini{width:38px;height:38px;justify-self:center;
+.duel-rows .vmini{width:34px;height:34px;justify-self:center;
   background:url('VALORA%20LOGO.png') no-repeat left center / auto 135%;
   filter:drop-shadow(0 3px 8px rgba(20,98,196,.3))}
-.solve-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:50px}
-.solve-row video{width:100%;max-width:420px;margin:0 auto;display:block;mix-blend-mode:multiply}
-.solve-row .txt2 h3{font-size:clamp(1.5rem,3vw,2rem);font-weight:800}
-.solve-row .txt2 h3 i{font-style:normal;color:var(--accent)}
-.solve-row .txt2 p{color:#3d4a5c;margin-top:12px;max-width:440px}
-.cta-btn2{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:14px 30px;border-radius:99px;
+.side2{text-align:center}
+.side2 video{width:100%;max-width:380px;margin:0 auto;display:block;mix-blend-mode:multiply}
+.side2 h3{font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:800;margin-top:14px}
+.side2 h3 i{font-style:normal;color:var(--accent)}
+.side2 p{color:#3d4a5c;margin-top:10px;max-width:420px;margin-left:auto;margin-right:auto;font-size:.95rem}
+.cta-btn2{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:14px 30px;border-radius:99px;
   background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;font-weight:800;transition:.25s}
 .cta-btn2:hover{box-shadow:0 0 30px rgba(46,168,255,.55);transform:translateY(-2px)}
-@media(max-width:820px){
-  .solve-row{grid-template-columns:1fr;gap:26px}
-  .duel-rows li{grid-template-columns:20px 1fr 54px}
+@media(max-width:880px){
+  .split2{grid-template-columns:1fr;gap:40px}
+  .duel-rows li{grid-template-columns:20px 1fr 50px}
   .duel-rows .vmini{width:30px;height:30px}
 }
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:99px;
@@ -177,28 +179,27 @@ footer b{color:var(--text);letter-spacing:.25em}
 </section>
 
 <section class="white2">
-  <div class="wrap">
-    <div class="duel-head reveal">
-      <h2 class="red">Você conhece essa rotina?</h2>
-      <h2 class="blue">A Valora <i>resolve</i>.</h2>
+  <div class="wrap split2">
+    <div class="reveal">
+      <div class="duel-head">
+        <h2 class="red">Você conhece essa rotina?</h2>
+        <h2 class="blue">A Valora <i>resolve</i>.</h2>
+      </div>
+      <ul class="duel-rows">
+        <li><span class="x">✗</span><span>Cliente sem resposta no WhatsApp</span><span class="vmini"></span></li>
+        <li><span class="x">✗</span><span>Fim do mês sem saber o lucro</span><span class="vmini"></span></li>
+        <li><span class="x">✗</span><span>Agenda furada, cliente esquecido</span><span class="vmini"></span></li>
+        <li><span class="x">✗</span><span>Tarefas rotineiras e repetidas</span><span class="vmini"></span></li>
+        <li><span class="x">✗</span><span>Cobrança esquecida = prejuízo</span><span class="vmini"></span></li>
+      </ul>
     </div>
-    <ul class="duel-rows reveal">
-      <li><span class="x">✗</span><span>Cliente sem resposta no WhatsApp</span><span class="vmini"></span></li>
-      <li><span class="x">✗</span><span>Fim do mês sem saber o lucro</span><span class="vmini"></span></li>
-      <li><span class="x">✗</span><span>Agenda furada, cliente esquecido</span><span class="vmini"></span></li>
-      <li><span class="x">✗</span><span>Tarefas rotineiras e repetidas</span><span class="vmini"></span></li>
-      <li><span class="x">✗</span><span>Cobrança esquecida = prejuízo</span><span class="vmini"></span></li>
-    </ul>
-
-    <div class="solve-row">
-      <video class="reveal" autoplay muted loop playsinline onerror="this.remove()">
+    <div class="side2 reveal">
+      <video autoplay muted loop playsinline onerror="this.remove()">
         <source src="robo.relogio.mp4" type="video/mp4">
       </video>
-      <div class="txt2 reveal">
-        <h3>O tempo não espera. Seu concorrente também não<i>.</i></h3>
-        <p>Sistema, site, robô de atendimento e painel do lucro — tudo sob medida para o seu negócio funcionar sozinho, enquanto você cuida do que importa.</p>
-        <a class="cta-btn2" href="https://wa.me/5541999286812" target="_blank">Falar com a Valora →</a>
-      </div>
+      <h3>O tempo não espera. Seu concorrente também não<i>.</i></h3>
+      <p>Sistema, site, robô de atendimento e painel do lucro — tudo sob medida para o seu negócio funcionar sozinho.</p>
+      <a class="cta-btn2" href="https://wa.me/5541999286812" target="_blank">Falar com a Valora →</a>
     </div>
   </div>
 </section>
