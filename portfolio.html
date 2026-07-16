@@ -55,15 +55,22 @@ nav .cta-mini:hover{box-shadow:0 0 22px rgba(46,168,255,.55)}
 .vhero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .vhero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,6,11,.88) 0%,rgba(4,6,11,.55) 55%,rgba(4,6,11,.25) 100%)}
 .vhero .wrap{position:relative;z-index:2}
-.vhero h1{font-size:clamp(1.5rem,3.4vw,2.5rem);font-weight:800;line-height:1.25;text-transform:uppercase;
-  max-width:640px;margin-top:18px}
-.vhero h1 i{font-style:normal;color:#ffb52e}
-.vhero p{color:#d5e0ee;margin-top:16px;max-width:480px;font-size:1rem}
-.vhero .cta-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:14px 30px;border-radius:99px;
+.vcard{max-width:740px;padding:46px 50px;border-radius:26px;position:relative;
+  background:rgba(10,16,28,.42);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);
+  animation:rise .6s cubic-bezier(.22,.9,.3,1) 1.15s both}
+@keyframes rise{from{opacity:.2;transform:translateX(100vw)}to{opacity:1;transform:none}}
+.vcard .vlabel{position:absolute;left:18px;top:50%;transform:translateY(-50%) rotate(180deg);
+  writing-mode:vertical-rl;font-size:.68rem;letter-spacing:.35em;color:var(--muted);text-transform:uppercase}
+.vcard h1{font-size:clamp(1.5rem,3.4vw,2.5rem);font-weight:800;line-height:1.25;text-transform:uppercase}
+.vcard h1 i{font-style:normal;color:#ffb52e}
+.vcard p{color:#d7e5f5;margin-top:16px;max-width:520px;font-size:.92rem;
+  text-transform:uppercase;letter-spacing:.14em;font-weight:600}
+.vcard .cta-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:14px 30px;border-radius:99px;
   background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;font-weight:800;transition:.25s;
   animation:pulse 2.2s ease-in-out infinite}
-.vhero .cta-btn:hover{box-shadow:0 0 34px rgba(46,168,255,.7);transform:translateY(-2px)}
+.vcard .cta-btn:hover{box-shadow:0 0 34px rgba(46,168,255,.7);transform:translateY(-2px)}
 @keyframes pulse{50%{box-shadow:0 0 26px rgba(46,168,255,.55)}}
+@media(max-width:640px){.vcard{padding:36px 28px 36px 44px}}
 
 /* Seção 2 — branca: dor x Valora resolve */
 .white2{background:#f2f4f7;color:#10151d;padding:90px 0}
@@ -166,10 +173,12 @@ footer b{color:var(--text);letter-spacing:.25em}
   </video>
   <div class="shade"></div>
   <div class="wrap">
-    <span class="chip">Portfólio</span>
-    <h1 class="reveal">Cada dia sem <i>sistema de gestão</i>, seu negócio perde dinheiro — e você nem vê.</h1>
-    <p class="reveal">O tempo está correndo. Enquanto você adia, seu concorrente já vende no automático.</p>
-    <a class="cta-btn reveal" href="https://wa.me/5541999286812" target="_blank">Quero resolver agora →</a>
+    <div class="vcard">
+      <span class="vlabel">Urgência</span>
+      <h1>Cada dia sem <i>sistema de gestão</i>, seu negócio perde dinheiro — e você nem vê.</h1>
+      <p>O tempo está correndo. Enquanto você adia, seu concorrente já vende no automático.</p>
+      <a class="cta-btn" href="https://wa.me/5541999286812" target="_blank">Quero resolver agora →</a>
+    </div>
   </div>
 </section>
 
