@@ -126,6 +126,20 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:28px 0;text-align:cent
 footer b{color:var(--text);letter-spacing:.25em}
 .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
+.bottomnav{display:none}
+@media(max-width:900px){
+  .menu-btn{display:none!important}
+  .bottomnav{position:fixed;left:12px;right:12px;bottom:12px;z-index:120;
+    display:flex;justify-content:space-around;align-items:center;
+    background:rgba(10,14,22,.92);backdrop-filter:blur(14px);
+    border:1px solid var(--line);border-radius:22px;padding:10px 4px;
+    box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .bottomnav a{display:flex;flex-direction:column;align-items:center;gap:3px;
+    color:var(--muted);font-size:.6rem;font-weight:600}
+  .bottomnav a svg{width:22px;height:22px}
+  .bottomnav a.on{color:var(--accent2)}
+  body{padding-bottom:88px}
+}
 </style>
 </head>
 <body>
@@ -146,6 +160,14 @@ footer b{color:var(--text);letter-spacing:.25em}
     <button class="menu-btn" onclick="document.getElementById('links').classList.toggle('open')">☰</button>
   </div>
 </nav>
+
+<div class="bottomnav">
+  <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.5 12 3.5l8.5 7v9a1.5 1.5 0 0 1-1.5 1.5h-4.5v-6h-5v6H5a1.5 1.5 0 0 1-1.5-1.5z"/></svg><span>Home</span></a>
+  <a href="avalora.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.5 1.5 5.5 5 5.5 9l-2.5 2.5h-6L6.5 11.5c0-4 2-7.5 5.5-9z"/><path d="M9 14l-1.5 5L12 17l4.5 2L15 14"/><circle cx="12" cy="9" r="1.6"/></svg><span>A Valora</span></a>
+  <a href="servicos.html" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M14 4.5v5M8 14.5v5"/></svg><span>Serviços</span></a>
+  <a href="portfolio.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Portfólio</span></a>
+  <a href="index.html#contato"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8H5l1.5-3A8 8 0 0 1 12 4z"/></svg><span>Contato</span></a>
+</div>
 
 <!-- Hero split -->
 <section class="split">
