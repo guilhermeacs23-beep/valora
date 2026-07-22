@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meus Robôs — Valora</title>
+<style>
+:root{--bg:#05080f;--panel:#0d1526;--accent:#2ea8ff;--accent2:#8fd6ff;--text:#f2f6fb;--muted:#9db0c9;--line:rgba(143,214,255,.16)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:var(--bg);color:var(--text);padding:24px;max-width:1000px;margin:0 auto}
+h1{font-size:1.7rem;font-weight:800;margin-bottom:4px}h1 b{color:var(--accent)}
+.sub{color:var(--muted);margin-bottom:22px;font-size:.9rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+input,textarea,select{background:#0a0f1a;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px 13px;font-size:.95rem;width:100%}
+textarea{min-height:140px;resize:vertical;line-height:1.5}
+label{display:block;font-size:.8rem;color:var(--muted);margin:12px 0 5px;font-weight:600}
+button{background:linear-gradient(135deg,var(--accent),#0d6fc0);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-weight:700;cursor:pointer;font-size:.9rem;transition:.2s}
+button:hover{box-shadow:0 0 18px rgba(46,168,255,.5)}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+button.danger{background:transparent;border:1px solid rgba(255,90,90,.4);color:#ff8a8a}
+.list-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:#0a1220}
+.list-item .info b{font-size:1.05rem}.list-item .info span{display:block;color:var(--muted);font-size:.8rem}
+.badge{font-size:.7rem;padding:3px 10px;border-radius:99px;font-weight:700}
+.on{background:rgba(46,208,140,.15);color:#2fd08c}.off{background:rgba(255,90,90,.15);color:#ff8a8a}
+#login{max-width:380px;margin:70px auto}
+.hide{display:none}
+.hint{font-size:.78rem;color:var(--muted);margin-top:5px}
+</style>
+</head>
+<body>
+<div id="login" class="card">
+  <h1>Meus <b>Robôs</b></h1><p class="sub">Painel de perfis — Valora</p>
+  <label>Senha do painel</label><input id="pass" type="password" placeholder="senha">
+  <div style="margin-top:14px"><button onclick="login()">Entrar</button></div>
+  <p id="loginerr" class="hint" style="color:#ff8a8a"></p>
+</div>
+<div id="app" class="hide">
+  <h1>Meus <b>Robôs</b></h1>
+  <p class="sub">Cadastre e edite o atendimento de cada negócio. A "instância" é o nome do WhatsApp na Evolution.</p>
+  <div id="lista"></div>
+  <div class="card">
+    <h3 id="formtitle" style="margin-bottom:6px">Novo robô</h3>
+    <label>Instância (nome do WhatsApp na Evolution)</label><input id="f_inst" placeholder="ex: barbearia_jose">
+    <label>Nome do negócio</label><input id="f_emp" placeholder="ex: Barbearia do José">
+    <label>Como o robô atende (personalidade + o que ele sabe)</label>
+    <textarea id="f_prompt" placeholder="Você é o atendente da Barbearia do José..."></textarea>
+    <p class="hint">Descreva o tom, os serviços e o que ele deve perguntar/fazer.</p>
+    <label>Ativo</label><select id="f_ativo"><option value="true">Sim</option><option value="false">Não</option></select>
+    <div class="row" style="margin-top:16px"><button onclick="salvar()">Salvar</button><button class="ghost" onclick="limpar()">Limpar</button></div>
+  </div>
+</div>
+<script>
+const API="https://lpljcfvhwwpgqeyincub.supabase.co/functions/v1/painel-robos";
+let P="";
+function api(action,extra){return fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,pass:P,...extra})}).then(r=>r.json())}
+function login(){P=document.getElementById("pass").value;api("list").then(d=>{if(d.error){document.getElementById("loginerr").textContent="Senha incorreta";return}document.getElementById("login").classList.add("hide");document.getElementById("app").classList.remove("hide");render(d.rows)}).catch(()=>document.getElementById("loginerr").textContent="Erro de conexão")}
+function render(rows){const l=document.getElementById("lista");window._rows=rows;l.innerHTML=(rows||[]).map(r=>`<div class="list-item"><div class="info"><b>${esc(r.empresa)}</b><span>instância: ${esc(r.instancia)}</span></div><div class="row"><span class="badge ${r.ativo?'on':'off'}">${r.ativo?'Ativo':'Desligado'}</span><button class="ghost" onclick='editar(${JSON.stringify(r.instancia)})'>Editar</button><button class="danger" onclick='remover(${JSON.stringify(r.instancia)})'>Excluir</button></div></div>`).join("")||'<p class="sub">Nenhum robô ainda.</p>'}
+function esc(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function editar(inst){const r=window._rows.find(x=>x.instancia===inst);if(!r)return;f_inst.value=r.instancia;f_emp.value=r.empresa;f_prompt.value=r.prompt;f_ativo.value=String(r.ativo);document.getElementById("formtitle").textContent="Editar robô";scrollTo(0,document.body.scrollHeight)}
+function limpar(){f_inst.value="";f_emp.value="";f_prompt.value="";f_ativo.value="true";document.getElementById("formtitle").textContent="Novo robô"}
+function salvar(){const b={instancia:f_inst.value.trim(),empresa:f_emp.value.trim(),prompt:f_prompt.value.trim(),ativo:f_ativo.value==="true"};if(!b.instancia||!b.empresa||!b.prompt){alert("Preencha instância, negócio e o texto de atendimento.");return}api("save",{row:b}).then(()=>{limpar();api("list").then(d=>render(d.rows))})}
+function remover(inst){if(!confirm("Excluir o robô '"+inst+"'?"))return;api("delete",{instancia:inst}).then(()=>api("list").then(d=>render(d.rows)))}
+</script>
+</body>
+</html>
