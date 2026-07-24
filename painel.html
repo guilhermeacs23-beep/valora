@@ -50,17 +50,46 @@ button.danger{background:transparent;border:1px solid rgba(255,90,90,.4);color:#
     <div class="row" style="margin-top:16px"><button onclick="salvar()">Salvar</button><button class="ghost" onclick="limpar()">Limpar</button></div>
   </div>
 </div>
+<div id="qrmodal" class="hide" style="position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px">
+  <div class="card" style="max-width:340px;width:100%;text-align:center">
+    <h3 id="qrtitle" style="margin-bottom:6px">Conectar WhatsApp</h3>
+    <p class="hint" id="qrsub" style="margin-bottom:14px">No celular do negócio: WhatsApp → Aparelhos conectados → Conectar um aparelho, e escaneie:</p>
+    <div id="qrbox" style="background:#fff;border-radius:12px;padding:12px;display:inline-block;min-height:200px;min-width:200px"></div>
+    <p id="qrstate" class="hint" style="margin-top:12px"></p>
+    <div class="row" style="margin-top:14px;justify-content:center"><button class="ghost" onclick="closeQr()">Fechar</button></div>
+  </div>
+</div>
 <script>
 const API="https://lpljcfvhwwpgqeyincub.supabase.co/functions/v1/painel-robos";
 let P="";
 function api(action,extra){return fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action,pass:P,...extra})}).then(r=>r.json())}
 function login(){P=document.getElementById("pass").value;api("list").then(d=>{if(d.error){document.getElementById("loginerr").textContent="Senha incorreta";return}document.getElementById("login").classList.add("hide");document.getElementById("app").classList.remove("hide");render(d.rows)}).catch(()=>document.getElementById("loginerr").textContent="Erro de conexão")}
-function render(rows){const l=document.getElementById("lista");window._rows=rows;l.innerHTML=(rows||[]).map(r=>`<div class="list-item"><div class="info"><b>${esc(r.empresa)}</b><span>instância: ${esc(r.instancia)}</span></div><div class="row"><span class="badge ${r.ativo?'on':'off'}">${r.ativo?'Ativo':'Desligado'}</span><button class="ghost" onclick='editar(${JSON.stringify(r.instancia)})'>Editar</button><button class="danger" onclick='remover(${JSON.stringify(r.instancia)})'>Excluir</button></div></div>`).join("")||'<p class="sub">Nenhum robô ainda.</p>'}
+function render(rows){const l=document.getElementById("lista");window._rows=rows;l.innerHTML=(rows||[]).map(r=>`<div class="list-item"><div class="info"><b>${esc(r.empresa)}</b><span>instância: ${esc(r.instancia)}</span></div><div class="row"><span class="badge ${r.ativo?'on':'off'}">${r.ativo?'Ativo':'Desligado'}</span><button onclick='conectar(${JSON.stringify(r.instancia)})'>Conectar</button><button class="ghost" onclick='editar(${JSON.stringify(r.instancia)})'>Editar</button><button class="danger" onclick='remover(${JSON.stringify(r.instancia)})'>Excluir</button></div></div>`).join("")||'<p class="sub">Nenhum robô ainda.</p>'}
 function esc(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function editar(inst){const r=window._rows.find(x=>x.instancia===inst);if(!r)return;f_inst.value=r.instancia;f_emp.value=r.empresa;f_prompt.value=r.prompt;f_ativo.value=String(r.ativo);document.getElementById("formtitle").textContent="Editar robô";scrollTo(0,document.body.scrollHeight)}
 function limpar(){f_inst.value="";f_emp.value="";f_prompt.value="";f_ativo.value="true";document.getElementById("formtitle").textContent="Novo robô"}
 function salvar(){const b={instancia:f_inst.value.trim(),empresa:f_emp.value.trim(),prompt:f_prompt.value.trim(),ativo:f_ativo.value==="true"};if(!b.instancia||!b.empresa||!b.prompt){alert("Preencha instância, negócio e o texto de atendimento.");return}api("save",{row:b}).then(()=>{limpar();api("list").then(d=>render(d.rows))})}
 function remover(inst){if(!confirm("Excluir o robô '"+inst+"'?"))return;api("delete",{instancia:inst}).then(()=>api("list").then(d=>render(d.rows)))}
+let qrTimer=null;
+function conectar(inst){
+  document.getElementById("qrtitle").textContent="Conectar: "+inst;
+  document.getElementById("qrsub").textContent="No celular do negócio: WhatsApp → Aparelhos conectados → Conectar um aparelho, e escaneie:";
+  document.getElementById("qrbox").innerHTML='<p style="color:#333;padding:80px 10px">Gerando QR…</p>';
+  document.getElementById("qrstate").textContent="";
+  document.getElementById("qrmodal").classList.remove("hide");
+  api("qrcode",{instancia:inst}).then(d=>{
+    if(d&&d.state==="open"){document.getElementById("qrbox").innerHTML='<p style="color:#0a7d47;padding:80px 10px;font-weight:700;font-size:1.1rem">Já conectado ✓</p>';return}
+    if(d&&d.base64){document.getElementById("qrbox").innerHTML='<img src="'+d.base64+'" style="width:230px;height:230px" alt="QR code">'}
+    else{document.getElementById("qrbox").innerHTML='<p style="color:#c0392b;padding:70px 10px">Não consegui gerar o QR.<br>Tente de novo em instantes.</p>';return}
+    clearInterval(qrTimer);
+    qrTimer=setInterval(()=>{api("status",{instancia:inst}).then(s=>{
+      const st=(s&&s.state)||"aguardando…";
+      document.getElementById("qrstate").textContent="Status: "+st;
+      if(st==="open"){clearInterval(qrTimer);document.getElementById("qrbox").innerHTML='<p style="color:#0a7d47;padding:80px 10px;font-weight:700;font-size:1.1rem">Conectado ✓</p>';document.getElementById("qrsub").textContent="Pronto! Pode fechar.";}
+    })},4000);
+  }).catch(()=>{document.getElementById("qrbox").innerHTML='<p style="color:#c0392b;padding:70px 10px">Erro de conexão.</p>'});
+}
+function closeQr(){clearInterval(qrTimer);document.getElementById("qrmodal").classList.add("hide")}
 </script>
 </body>
 </html>
