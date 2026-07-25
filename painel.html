@@ -50,7 +50,7 @@ button.danger{background:transparent;border:1px solid rgba(255,90,90,.4);color:#
     <div class="row" style="margin-top:16px"><button onclick="salvar()">Salvar</button><button class="ghost" onclick="limpar()">Limpar</button></div>
   </div>
 </div>
-<div id="qrmodal" class="hide" onclick="if(event.target===this)closeQr()" style="position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px">
+<div id="qrmodal" onclick="if(event.target===this)closeQr()" style="position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:99;padding:20px">
   <div class="card" style="max-width:340px;width:100%;text-align:center">
     <h3 id="qrtitle" style="margin-bottom:6px">Conectar WhatsApp</h3>
     <p class="hint" id="qrsub" style="margin-bottom:14px">No celular do negócio: WhatsApp → Aparelhos conectados → Conectar um aparelho, e escaneie:</p>
@@ -93,7 +93,7 @@ function conectar(inst){
   document.getElementById("qrsub").textContent="No celular do negócio: WhatsApp → Aparelhos conectados → Conectar um aparelho, e escaneie:";
   qrShow('<p style="color:#333;padding:80px 10px">Gerando QR…</p>');
   document.getElementById("qrstate").textContent="";
-  document.getElementById("qrmodal").classList.remove("hide");
+  document.getElementById("qrmodal").style.display="flex";
   gerarQR(inst);
   clearInterval(qrRefreshTimer); qrRefreshTimer=setInterval(()=>gerarQR(inst),20000); // renova o QR
   clearInterval(qrStatusTimer); qrStatusTimer=setInterval(()=>{
@@ -104,7 +104,7 @@ function conectar(inst){
     });
   },4000);
 }
-function closeQr(){clearInterval(qrStatusTimer);clearInterval(qrRefreshTimer);qrConectado=false;document.getElementById("qrmodal").classList.add("hide")}
+function closeQr(){clearInterval(qrStatusTimer);clearInterval(qrRefreshTimer);qrConectado=false;document.getElementById("qrmodal").style.display="none"}
 </script>
 </body>
 </html>
