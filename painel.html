@@ -50,7 +50,7 @@ button.danger{background:transparent;border:1px solid rgba(255,90,90,.4);color:#
     <div class="row" style="margin-top:16px"><button onclick="salvar()">Salvar</button><button class="ghost" onclick="limpar()">Limpar</button></div>
   </div>
 </div>
-<div id="qrmodal" class="hide" style="position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px">
+<div id="qrmodal" class="hide" onclick="if(event.target===this)closeQr()" style="position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px">
   <div class="card" style="max-width:340px;width:100%;text-align:center">
     <h3 id="qrtitle" style="margin-bottom:6px">Conectar WhatsApp</h3>
     <p class="hint" id="qrsub" style="margin-bottom:14px">No celular do negócio: WhatsApp → Aparelhos conectados → Conectar um aparelho, e escaneie:</p>
@@ -70,26 +70,41 @@ function editar(inst){const r=window._rows.find(x=>x.instancia===inst);if(!r)ret
 function limpar(){f_inst.value="";f_emp.value="";f_prompt.value="";f_ativo.value="true";document.getElementById("formtitle").textContent="Novo robô"}
 function salvar(){const b={instancia:f_inst.value.trim(),empresa:f_emp.value.trim(),prompt:f_prompt.value.trim(),ativo:f_ativo.value==="true"};if(!b.instancia||!b.empresa||!b.prompt){alert("Preencha instância, negócio e o texto de atendimento.");return}api("save",{row:b}).then(()=>{limpar();api("list").then(d=>render(d.rows))})}
 function remover(inst){if(!confirm("Excluir o robô '"+inst+"'?"))return;api("delete",{instancia:inst}).then(()=>api("list").then(d=>render(d.rows)))}
-let qrTimer=null;
+let qrStatusTimer=null, qrRefreshTimer=null, qrConectado=false;
+function qrShow(html){document.getElementById("qrbox").innerHTML=html}
+function qrConectou(){
+  qrConectado=true; clearInterval(qrStatusTimer); clearInterval(qrRefreshTimer);
+  qrShow('<p style="color:#0a7d47;padding:80px 10px;font-weight:700;font-size:1.1rem">Conectado ✓</p>');
+  document.getElementById("qrsub").textContent="Pronto! Pode fechar.";
+  document.getElementById("qrstate").textContent="";
+}
+function gerarQR(inst){
+  if(qrConectado)return;
+  api("qrcode",{instancia:inst}).then(d=>{
+    if(qrConectado)return;
+    if(d&&d.state==="open"){qrConectou();return}
+    if(d&&d.base64){qrShow('<img src="'+d.base64+'" style="width:230px;height:230px" alt="QR code"><p style="color:#9db0c9;font-size:.75rem;margin-top:8px">O código se renova sozinho — escaneie quando estiver pronto.</p>')}
+    else if(document.getElementById("qrbox").querySelector("img")===null){qrShow('<p style="color:#f0c040;padding:70px 10px">Preparando a instância…<br>aguarde uns segundos.</p>')}
+  }).catch(()=>{if(document.getElementById("qrbox").querySelector("img")===null)qrShow('<p style="color:#c0392b;padding:70px 10px">Erro de conexão. Tentando de novo…</p>')});
+}
 function conectar(inst){
+  qrConectado=false;
   document.getElementById("qrtitle").textContent="Conectar: "+inst;
   document.getElementById("qrsub").textContent="No celular do negócio: WhatsApp → Aparelhos conectados → Conectar um aparelho, e escaneie:";
-  document.getElementById("qrbox").innerHTML='<p style="color:#333;padding:80px 10px">Gerando QR…</p>';
+  qrShow('<p style="color:#333;padding:80px 10px">Gerando QR…</p>');
   document.getElementById("qrstate").textContent="";
   document.getElementById("qrmodal").classList.remove("hide");
-  api("qrcode",{instancia:inst}).then(d=>{
-    if(d&&d.state==="open"){document.getElementById("qrbox").innerHTML='<p style="color:#0a7d47;padding:80px 10px;font-weight:700;font-size:1.1rem">Já conectado ✓</p>';return}
-    if(d&&d.base64){document.getElementById("qrbox").innerHTML='<img src="'+d.base64+'" style="width:230px;height:230px" alt="QR code">'}
-    else{document.getElementById("qrbox").innerHTML='<p style="color:#c0392b;padding:70px 10px">Não consegui gerar o QR.<br>Tente de novo em instantes.</p>';return}
-    clearInterval(qrTimer);
-    qrTimer=setInterval(()=>{api("status",{instancia:inst}).then(s=>{
-      const st=(s&&s.state)||"aguardando…";
-      document.getElementById("qrstate").textContent="Status: "+st;
-      if(st==="open"){clearInterval(qrTimer);document.getElementById("qrbox").innerHTML='<p style="color:#0a7d47;padding:80px 10px;font-weight:700;font-size:1.1rem">Conectado ✓</p>';document.getElementById("qrsub").textContent="Pronto! Pode fechar.";}
-    })},4000);
-  }).catch(()=>{document.getElementById("qrbox").innerHTML='<p style="color:#c0392b;padding:70px 10px">Erro de conexão.</p>'});
+  gerarQR(inst);
+  clearInterval(qrRefreshTimer); qrRefreshTimer=setInterval(()=>gerarQR(inst),20000); // renova o QR
+  clearInterval(qrStatusTimer); qrStatusTimer=setInterval(()=>{
+    api("status",{instancia:inst}).then(s=>{
+      const st=(s&&s.state)||"aguardando";
+      if(!qrConectado)document.getElementById("qrstate").textContent="Status: "+st;
+      if(st==="open")qrConectou();
+    });
+  },4000);
 }
-function closeQr(){clearInterval(qrTimer);document.getElementById("qrmodal").classList.add("hide")}
+function closeQr(){clearInterval(qrStatusTimer);clearInterval(qrRefreshTimer);qrConectado=false;document.getElementById("qrmodal").classList.add("hide")}
 </script>
 </body>
 </html>
